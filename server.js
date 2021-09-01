@@ -44,6 +44,16 @@ io.on('connection' , socket => {
 
      socket.on('disconnect', () => {
          io.emit('message', 'A user has left the chat !')
+     });
+
+     // listen for new chat message 
+
+     socket.on('chatMessage', (msg) => {
+
+       io.emit('message', msg);
+       
+
+
      })
 
 })
