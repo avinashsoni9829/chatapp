@@ -1,6 +1,7 @@
 const path  = require('path');
 const socketio = require('socket.io');
 const http = require('http');
+const formatMessage = require('./utils/messages');
 
 const express = require('express');
 const app = express();
@@ -21,8 +22,8 @@ const PORT = 3000 || process.env.PORT ;
 
 
 app.use(express.static(path.join(__dirname , 'public')));
-
-
+ 
+const botname = 'ChatBot'
 // this runs when the client is connected 
 
 io.on('connection' , socket => {
@@ -30,12 +31,13 @@ io.on('connection' , socket => {
     // socket.emit - >  this will emit to the single client which is connecting   
   
   
-     socket.emit('message', 'Welcome to chatRoom!');
+     socket.emit('message', formatMessage(botname,'Welcome to chatRoom!'));
 
     // broadcast this message when the user connect 
      // socket.broadcast.emit -> this is emit to everyone except the user which is connected 
      
-     socket.broadcast.emit('message' , ' A user has joined the chat !');
+     socket.broadcast.emit('message' , formatMessage(botname,'A user has joined the chat !'));
+
 
      // if we want to broadcast to all the clients then use io.emit();
 
@@ -43,15 +45,15 @@ io.on('connection' , socket => {
      // this runs when the client is disconnected 
 
      socket.on('disconnect', () => {
-         io.emit('message', 'A user has left the chat !')
+         io.emit('message', formatMessage(botname , 'A user has left the chat !'))
      });
 
      // listen for new chat message 
 
      socket.on('chatMessage', (msg) => {
 
-       io.emit('message', msg);
-       
+       io.emit('message', formatMessage('USER',msg));
+
 
 
      })

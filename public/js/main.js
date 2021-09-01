@@ -34,7 +34,7 @@ chatForm.addEventListener('submit', e => {
 
   e.target.elements.msg.value = '';
   e.target.elements.msg.focus();
-  
+
 
 
 
@@ -49,9 +49,9 @@ function outputMessage(message) {
 
     div.classList.add('message');
 
-    div.innerHTML = `<p class = "meta">Brad <span>9:12 pm </span> </p>
+    div.innerHTML = `<p class = "meta">${message.username} <span> ${message.time} </span> </p>
                      <p class = "text">
-                     ${message}
+                     ${message.text}
                      </p>      
                     `;
    
